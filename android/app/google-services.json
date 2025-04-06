@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "742928632721",
+    "project_id": "environment-monitoring-s-c26ff",
+    "storage_bucket": "environment-monitoring-s-c26ff.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:742928632721:android:a98292a3bdfe6c4177e830",
+        "android_client_info": {
+          "package_name": "com.example.env_monitoring_dashboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "742928632721-u9m2mpti0q9iat3m2ubeq28uq2ioda9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.env_monitoring_dashboard",
+            "certificate_hash": "baf2cbe14ae6cbe31fe55f1a1062071cc92bae32"
+          }
+        },
+        {
+          "client_id": "742928632721-oslbr35c2k8t5jgj3bhup5g03hms1mmh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi_mAF0-902Vogq3KUrLx7t3ZJvyxgqMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "742928632721-oslbr35c2k8t5jgj3bhup5g03hms1mmh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "742928632721-3tuai6cmratn7ocankvttm330k3adt1k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.envMonitoringDashboard"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
