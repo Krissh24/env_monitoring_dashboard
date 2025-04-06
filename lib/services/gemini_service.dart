@@ -1,8 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class GeminiService {
-  final _apiKey = dotenv.env['GEMINI_API_KEY'];
+  final _apiKey =
+      kIsWeb
+          ? 'AIzaSyDO9wi97MBfM5lDQTlIAFXRMfgCmUwseVQ'
+          : dotenv.env['GEMINI_API_KEY'];
   late final GenerativeModel _model;
 
   GeminiService() {

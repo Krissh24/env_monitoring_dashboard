@@ -4,6 +4,7 @@ import 'package:env_monitoring_dashboard/screens/details_screen.dart';
 import 'package:env_monitoring_dashboard/screens/green_initiative_screen.dart';
 import 'package:env_monitoring_dashboard/screens/reward_screen.dart';
 import 'package:env_monitoring_dashboard/screens/weather_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/environmental_screen.dart';
@@ -14,18 +15,56 @@ import 'screens/login_screen.dart';
 import 'screens/knowledge_camp_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+// Create a global variable to track if Firebase is initialized
+bool firebaseInitialized = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (Firebase.apps.isEmpty) {
-    await Firebase.initializeApp();
+
+  // Enhanced error logging for web
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.presentError(details);
+    print('FLUTTER ERROR: ${details.exception}');
+    print('STACK TRACE: ${details.stack}');
+  };
+
+  // Load environment variables with a try-catch
+  try {
+    if (!kIsWeb) {
+      await dotenv.load(fileName: "api.env");
+    }
+  } catch (e) {
+    print("Failed to load environment variables: $e");
   }
-  await dotenv.load(fileName: "api.env");
+
+  // Initialize Firebase with proper web configuration
+  try {
+    if (kIsWeb) {
+      await Firebase.initializeApp(
+        options: const FirebaseOptions(
+          apiKey: "AIzaSyCEJHNLxVEDu4vGdm2RM_yn-Kd-laE2Iwg",
+          authDomain: "environment-monitoring-s-c26ff.firebaseapp.com",
+          projectId: "environment-monitoring-s-c26ff",
+          storageBucket: "environment-monitoring-s-c26ff.firebasestorage.app",
+          messagingSenderId: "742928632721",
+          appId: "1:742928632721:web:db1facec490e8b5a77e830",
+          measurementId: "G-WHG8ELD6S8",
+        ),
+      );
+    } else {
+      await Firebase.initializeApp();
+    }
+    firebaseInitialized = true;
+    print("Firebase successfully initialized in main.dart");
+  } catch (e) {
+    print("Error initializing Firebase in main.dart: $e");
+  }
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -42,8 +81,18 @@ class MyApp extends StatelessWidget {
             );
           }
 
-          final user = snapshot.data;
+          if (snapshot.hasError) {
+            print("Auth stream error: ${snapshot.error}");
+            return MaterialApp(
+              home: Scaffold(
+                body: Center(
+                  child: Text("Authentication Error: ${snapshot.error}"),
+                ),
+              ),
+            );
+          }
 
+          final user = snapshot.data;
           if (user != null) {
             // 👇 Trigger loadUserProgress here
             WidgetsBinding.instance.addPostFrameCallback((_) {

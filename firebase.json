@@ -1,1 +1,37 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"environment-monitoring-s-c26ff","appId":"1:742928632721:android:a98292a3bdfe6c4177e830","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"environment-monitoring-s-c26ff","configurations":{"android":"1:742928632721:android:a98292a3bdfe6c4177e830","ios":"1:742928632721:ios:ee98dfba470675e777e830","web":"1:742928632721:web:db1facec490e8b5a77e830"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "environment-monitoring-s-c26ff",
+          "appId": "1:742928632721:android:a98292a3bdfe6c4177e830",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "environment-monitoring-s-c26ff",
+          "configurations": {
+            "android": "1:742928632721:android:a98292a3bdfe6c4177e830",
+            "ios": "1:742928632721:ios:ee98dfba470675e777e830",
+            "web": "1:742928632721:web:db1facec490e8b5a77e830"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -2,10 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import '../models/environmental_data.dart';
-import '../firebase_options.dart';
 import 'login_screen.dart';
 import 'profile_screen.dart';
+
+// Import the global variable
+// Note: You'll need to expose this variable in your main.dart file
+import '../main.dart' show firebaseInitialized;
 
 class EnvironmentalScreenWithLoginButton extends StatefulWidget {
   final String userId;
@@ -20,20 +24,11 @@ class EnvironmentalScreenWithLoginButton extends StatefulWidget {
 class _EnvironmentalScreenWithLoginButtonState
     extends State<EnvironmentalScreenWithLoginButton> {
   bool hasJoined = false;
-  late Future<FirebaseApp> _firebaseInit;
 
   @override
   void initState() {
     super.initState();
-    _firebaseInit = _initializeFirebase();
-  }
-
-  Future<FirebaseApp> _initializeFirebase() async {
-    if (Firebase.apps.isEmpty) {
-      return await Firebase.initializeApp();
-    } else {
-      return Firebase.app(); // already initialized
-    }
+    // No need to initialize Firebase again
   }
 
   @override
@@ -41,18 +36,19 @@ class _EnvironmentalScreenWithLoginButtonState
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
-      body: FutureBuilder(
-        future: _firebaseInit,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(
-              child: Text("Error initializing Firebase: ${snapshot.error}"),
+      body: Builder(
+        builder: (context) {
+          // Check if Firebase is already initialized
+          if (!firebaseInitialized && kIsWeb) {
+            // For web, don't try to initialize again, just show error
+            return const Center(
+              child: Text(
+                "Firebase initialization error. Please refresh the page.",
+              ),
             );
           }
 
+          // The rest of your UI
           return Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -125,7 +121,6 @@ class _EnvironmentalScreenWithLoginButtonState
                                   () =>
                                       Navigator.pushNamed(context, '/rewards'),
                             ),
-
                             _buildCard(
                               icon: hasJoined ? Icons.nature : Icons.forest,
                               label:

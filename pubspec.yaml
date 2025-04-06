@@ -83,6 +83,7 @@ flutter:
       - assets/backgrounds/rainy.jpg
       - assets/backgrounds/cloudy.jpg
       - assets/backgrounds/default.jpg
+      - assets/backgrounds/google_icon.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
